@@ -108,36 +108,36 @@ async def delete_student(student_id: int, db: Session = Depends(get_db)):
 
 # Coffee Menu
 
-@router_v1.get('/coffee')
+@router_v1.get('/menus')
 async def get_coffee(db: Session = Depends(get_db)):
-    return db.query(models.Coffee).all()
+    return db.query(models.Menu).all()
 
-@router_v1.get('/coffee/{coffee_id}')
-async def get_coffee(coffee_id: int, db: Session = Depends(get_db)):
-    return db.query(models.Coffee).filter(models.Coffee.id == coffee_id).first()
+@router_v1.get('/menus/{menu_id}')
+async def get_coffee(menu_id: int, db: Session = Depends(get_db)):
+    return db.query(models.Menu).filter(models.Menu.id == menu_id).first()
 
-@router_v1.post('/coffee')
-async def create_coffee(coffee: dict, response: Response, db: Session = Depends(get_db)):
+@router_v1.post('/menus')
+async def create_coffee(menu: dict, response: Response, db: Session = Depends(get_db)):
 
-    newstudent = models.Coffee(menu=coffee['menu'], quantity=coffee['quantity'], note=coffee['note'])
-    db.add(newstudent)
+    newcoffee = models.Menu(menu=menu['menu'], quantity=menu['quantity'], note=menu['note'])
+    db.add(newcoffee)
     db.commit()
-    db.refresh(newstudent)
+    db.refresh(newcoffee)
     response.status_code = 201
-    return newstudent
+    return newcoffee
 
-@router_v1.patch('/coffee/{coffee_id}')
-async def update_coffee(coffee_id: int, coffee: dict, db: Session = Depends(get_db)):
-    db_item = db.query(models.Coffee).filter(models.Coffee.id == coffee_id).first()
-    for key, value in coffee.items():
+@router_v1.patch('/menus/{menu_id}')
+async def update_coffee(menu_id: int, menu: dict, db: Session = Depends(get_db)):
+    db_item = db.query(models.Menu).filter(models.Menu.id == menu_id).first()
+    for key, value in menu.items():
             setattr(db_item, key, value)
     db.commit()
     db.refresh(db_item)
     return db_item
 
-@router_v1.delete('/coffee/{coffee_id}')
-async def delete_coffee(coffee_id: int, db: Session = Depends(get_db)):
-    db_item = db.query(models.Coffee).filter(models.Coffee.id == coffee_id).first()
+@router_v1.delete('/menus/{menu_id}')
+async def delete_coffee(menu_id: int, db: Session = Depends(get_db)):
+    db_item = db.query(models.Menu).filter(models.Menu.id == menu_id).first()
     db.delete(db_item)
     db.commit()
     return "Delete successfully"

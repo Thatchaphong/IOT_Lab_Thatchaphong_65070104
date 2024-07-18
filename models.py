@@ -24,8 +24,8 @@ class Student(Base):
     birthdate = Column(String, index=True)
     gender = Column(String, index=True)
 
-class Coffee(Base):
-    __tablename__ = 'students'
+class Menu(Base):
+    __tablename__ = 'menus'
     
     id = Column(Integer, primary_key=True, index=True)
     menu = Column(String, index=True)
