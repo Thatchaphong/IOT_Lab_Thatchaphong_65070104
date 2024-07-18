@@ -23,3 +23,11 @@ class Student(Base):
     lastname = Column(String, index=True)
     birthdate = Column(String, index=True)
     gender = Column(String, index=True)
+
+class Coffee(Base):
+    __tablename__ = 'students'
+    
+    id = Column(Integer, primary_key=True, index=True)
+    menu = Column(String, index=True)
+    quantity = Column(Integer, index=True)
+    note = Column(String, index=True)
