@@ -139,6 +139,41 @@ async def delete_menu(menu_id: int, db: Session = Depends(get_db)):
     db.commit()
     return "Delete successfully"
 
+# Order menu
+
+@router_v1.get('/orders')
+async def get_order(db: Session = Depends(get_db)):
+    return db.query(models.Order).all()
+
+@router_v1.get('/orders/{order_id}')
+async def get_order(order_id: int, db: Session = Depends(get_db)):
+    return db.query(models.Order).filter(models.Menu.id == order_id).first()
+
+@router_v1.post('/orders')
+async def create_order(order: dict, response: Response, db: Session = Depends(get_db)):
+    neworder = models.Order(name=order['name'], quantity=order['quantity'], note=order['note'])
+    db.add(neworder)
+    db.commit()
+    db.refresh(neworder)
+    response.status_code = 201
+    return neworder
+
+@router_v1.patch('/orders/{order_id}')
+async def update_order(order_id: int, order: dict, db: Session = Depends(get_db)):
+    db_item = db.query(models.Order).filter(models.Order.id == order_id).first()
+    for key, value in order.items():
+            setattr(db_item, key, value)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+@router_v1.delete('/orders/{order_id}')
+async def delete_order(order_id: int, db: Session = Depends(get_db)):
+    db_item = db.query(models.Order).filter(models.Order.id == order_id).first()
+    db.delete(db_item)
+    db.commit()
+    return "Delete successfully"
+
 app.include_router(router_v1)
 if __name__ == '__main__':
     import uvicorn
