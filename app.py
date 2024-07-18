@@ -43,7 +43,6 @@ async def get_book(book_id: int, db: Session = Depends(get_db)):
 
 @router_v1.post('/books')
 async def create_book(book: dict, response: Response, db: Session = Depends(get_db)):
-    # TODO: Add validation
     newbook = models.Book(title=book['title'], author=book['author'], year=book['year'],detail=book['detail'],story=book['story'],catagory=book['catagory'], is_published=book['is_published'])
     db.add(newbook)
     db.commit()
@@ -81,7 +80,6 @@ async def get_students(student_id: int, db: Session = Depends(get_db)):
 
 @router_v1.post('/students')
 async def create_student(student: dict, response: Response, db: Session = Depends(get_db)):
-    # TODO: Add validation
     newstudent = models.Student(firstname=student['firstname'], lastname=student['lastname'], birthdate=student['birthdate'], gender=student['gender'])
     db.add(newstudent)
     db.commit()
@@ -109,25 +107,25 @@ async def delete_student(student_id: int, db: Session = Depends(get_db)):
 # Coffee Menu
 
 @router_v1.get('/menus')
-async def get_coffee(db: Session = Depends(get_db)):
+async def get_menu(db: Session = Depends(get_db)):
     return db.query(models.Menu).all()
 
 @router_v1.get('/menus/{menu_id}')
-async def get_coffee(menu_id: int, db: Session = Depends(get_db)):
+async def get_menu(menu_id: int, db: Session = Depends(get_db)):
     return db.query(models.Menu).filter(models.Menu.id == menu_id).first()
 
 @router_v1.post('/menus')
-async def create_coffee(menu: dict, response: Response, db: Session = Depends(get_db)):
+async def create_menu(menu: dict, response: Response, db: Session = Depends(get_db)):
 
-    newcoffee = models.Menu(name=menu['name'], quantity=menu['quantity'], note=menu['note'])
-    db.add(newcoffee)
+    newmenu = models.Menu(name=menu['name'], quantity=menu['quantity'], note=menu['note'])
+    db.add(newmenu)
     db.commit()
-    db.refresh(newcoffee)
+    db.refresh(newmenu)
     response.status_code = 201
-    return newcoffee
+    return newmenu
 
 @router_v1.patch('/menus/{menu_id}')
-async def update_coffee(menu_id: int, menu: dict, db: Session = Depends(get_db)):
+async def update_menu(menu_id: int, menu: dict, db: Session = Depends(get_db)):
     db_item = db.query(models.Menu).filter(models.Menu.id == menu_id).first()
     for key, value in menu.items():
             setattr(db_item, key, value)
@@ -136,7 +134,7 @@ async def update_coffee(menu_id: int, menu: dict, db: Session = Depends(get_db))
     return db_item
 
 @router_v1.delete('/menus/{menu_id}')
-async def delete_coffee(menu_id: int, db: Session = Depends(get_db)):
+async def delete_menu(menu_id: int, db: Session = Depends(get_db)):
     db_item = db.query(models.Menu).filter(models.Menu.id == menu_id).first()
     db.delete(db_item)
     db.commit()
