@@ -28,6 +28,6 @@ class Menu(Base):
     __tablename__ = 'menus'
     
     id = Column(Integer, primary_key=True, index=True)
-    menu = Column(String, index=True)
+    name = Column(String, index=True)
     quantity = Column(Integer, index=True)
     note = Column(String, index=True)
