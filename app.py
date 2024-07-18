@@ -62,7 +62,7 @@ async def update_book(book_id: int, book: dict, db: Session = Depends(get_db)):
     return db_item
 
 @router_v1.delete('/books/{book_id}')
-async def delete_book(book_id: int, book: dict,db: Session = Depends(get_db)):
+async def delete_book(book_id: int,db: Session = Depends(get_db)):
     db_item = db.query(models.Book).filter(models.Book.id == book_id).first()
     db.delete(db_item)
     db.commit()
