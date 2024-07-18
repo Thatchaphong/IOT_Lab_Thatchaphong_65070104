@@ -147,7 +147,7 @@ async def get_order(db: Session = Depends(get_db)):
 
 @router_v1.get('/orders/{order_id}')
 async def get_order(order_id: int, db: Session = Depends(get_db)):
-    return db.query(models.Order).filter(models.Menu.id == order_id).first()
+    return db.query(models.Order).filter(models.Order.id == order_id).first()
 
 @router_v1.post('/orders')
 async def create_order(order: dict, response: Response, db: Session = Depends(get_db)):
