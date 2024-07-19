@@ -115,7 +115,7 @@ async def get_menu(menu_id: int, db: Session = Depends(get_db)):
 
 @router_v1.post('/menus')
 async def create_menu(menu: dict, response: Response, db: Session = Depends(get_db)):
-    newmenu = models.Menu(name=menu['name'], quantity=menu['quantity'], note=menu['note'], price=menu['price'], image=menu['imageurl'])
+    newmenu = models.Menu(name=menu['name'], quantity=menu['quantity'], note=menu['note'], price=menu['price'], imageurl=menu['imageurl'])
     db.add(newmenu)
     db.commit()
     db.refresh(newmenu)
