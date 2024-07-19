@@ -80,7 +80,7 @@ async def get_students(student_id: int, db: Session = Depends(get_db)):
 
 @router_v1.post('/students')
 async def create_student(student: dict, response: Response, db: Session = Depends(get_db)):
-    newstudent = models.Student(firstname=student['firstname'], lastname=student['lastname'], birthdate=student['birthdate'], gender=student['gender'])
+    newstudent = models.Student(sid=student['sid'],firstname=student['firstname'], lastname=student['lastname'], birthdate=student['birthdate'], gender=student['gender'])
     db.add(newstudent)
     db.commit()
     db.refresh(newstudent)
@@ -94,7 +94,6 @@ async def update_student(student_id: int, student: dict, db: Session = Depends(g
             setattr(db_item, key, value)
     db.commit()
     db.refresh(db_item)
-    # response.status_code = 201
     return db_item
 
 @router_v1.delete('/students/{student_id}')

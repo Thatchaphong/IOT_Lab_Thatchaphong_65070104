@@ -19,6 +19,7 @@ class Student(Base):
     __tablename__ = 'students'
     
     id = Column(Integer, primary_key=True, index=True)
+    sid = Column(Integer, index=True)
     firstname = Column(String, index=True)
     lastname = Column(String, index=True)
     birthdate = Column(String, index=True)
