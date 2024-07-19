@@ -80,7 +80,7 @@ async def get_students(student_id: int, db: Session = Depends(get_db)):
 
 @router_v1.post('/students')
 async def create_student(student: dict, response: Response, db: Session = Depends(get_db)):
-    newstudent = models.Student(sid=student['sid'],firstname=student['firstname'], lastname=student['lastname'], birthdate=student['birthdate'], gender=student['gender'])
+    newstudent = models.Student(studentid=student['studentid'],firstname=student['firstname'], lastname=student['lastname'], birthdate=student['birthdate'], gender=student['gender'])
     db.add(newstudent)
     db.commit()
     db.refresh(newstudent)
